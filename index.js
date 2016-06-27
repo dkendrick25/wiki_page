@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var wikiLinkify = require('wiki-linkify');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.set('view engine', 'hbs');
@@ -21,8 +22,9 @@ app.get('/:pageName', function(request, response) {
       return;
     }
     var content = data.toString();
+    var wikiContent = wikiLinkify(content);
     console.log(content);
-    response.send(content);
+    response.send(wikiContent);
   });
 
 });
